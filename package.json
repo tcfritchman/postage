@@ -1,0 +1,9 @@
+{
+    "name": "postage",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "~4.0.0",
+        "ejs": "0.4.2",
+        "superagent": "0.3.0"
+    }
+}
