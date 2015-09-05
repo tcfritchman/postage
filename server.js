@@ -1,4 +1,5 @@
-var express = require('express')
+var express = require('express'),
+    usps = require('lib/usps')
 
 /* Create App */
 
@@ -14,6 +15,31 @@ var port = 3000;
 
 app.get('/', function (req, res) {
     res.render('index');
+});
+
+app.get('/rates', function(req, res, next) {
+    var results = [];
+    var shipment = {
+        orig:req.query.orig,
+        dest:req.query.dest,
+        type:req.quert.type,
+        pounds:req.query.pounds,
+        ounces:req.query.ounces,
+        nonrectangular:req.query.nonrectangular,
+        length:req.query.length,
+        width:req.query.width,
+        height:req.query.height,
+        girth:req.query.girth,
+        value:req.query.value,
+        shipDate:req.query.shipDate
+    }
+
+    usps.queryUSPS(shipment, function(err, USPSResults) {
+        if (err) return next(err);
+        results.concat(USPSResults);
+    });
+
+    res.json(results);
 });
 
 /* Listen */
