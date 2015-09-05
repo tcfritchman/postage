@@ -1,5 +1,6 @@
 var express = require('express'),
-    usps = require('lib/usps')
+    usps = require('lib/usps'),
+    config = require('./config')
 
 /* Create App */
 
@@ -9,7 +10,6 @@ var app = express.createServer();
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
-var port = 3000;
 
 /* Routes */
 
@@ -22,7 +22,7 @@ app.get('/rates', function(req, res, next) {
     var shipment = {
         orig:req.query.orig,
         dest:req.query.dest,
-        type:req.quert.type,
+        type:req.query.type,
         pounds:req.query.pounds,
         ounces:req.query.ounces,
         nonrectangular:req.query.nonrectangular,
@@ -44,4 +44,4 @@ app.get('/rates', function(req, res, next) {
 
 /* Listen */
 
-app.listen(port);
+app.listen(config.port);
