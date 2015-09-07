@@ -1,10 +1,10 @@
 var express = require('express'),
-    usps = require('lib/usps'),
+    usps = require('./lib/usps'),
     config = require('./config')
 
 /* Create App */
 
-var app = express.createServer();
+var app = express();
 
 /* Config */
 
@@ -45,3 +45,4 @@ app.get('/rates', function(req, res, next) {
 /* Listen */
 
 app.listen(config.port);
+console.log("Server listening on port " + config.port);
