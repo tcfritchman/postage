@@ -1,5 +1,6 @@
 var express = require('express'),
     usps = require('./lib/usps'),
+    verifyShipment = require('./lib/shipment').verify,
     config = require('./config')
 
 /* Create App */
@@ -18,7 +19,6 @@ app.get('/', function (req, res) {
 });
 
 app.get('/rates', function(req, res, next) {
-    var results = [];
     var shipment = {
         orig:req.query.orig,
         dest:req.query.dest,
@@ -34,15 +34,15 @@ app.get('/rates', function(req, res, next) {
         shipDate:req.query.shipDate
     }
 
+    verifyShipment(shipment);
+
     usps.queryUSPS(shipment, function(err, USPSResults) {
         if (err) {
             console.log(err);
             return next(err);
         }
-        results.concat(USPSResults);
+        res.json(USPSResults);
     });
-
-    res.json(results);
 });
 
 /* Listen */
