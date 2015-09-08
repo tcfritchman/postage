@@ -35,7 +35,10 @@ app.get('/rates', function(req, res, next) {
     }
 
     usps.queryUSPS(shipment, function(err, USPSResults) {
-        if (err) return next(err);
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
         results.concat(USPSResults);
     });
 
