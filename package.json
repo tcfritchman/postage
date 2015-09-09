@@ -3,8 +3,8 @@
     "version": "0.0.1",
     "dependencies": {
         "express": "~4.0.0",
-        "ejs": "0.4.2",
-        "superagent": "0.3.0",
+        "ejs": "~1.0.0",
+        "request":"~2.61.0",
 	    "xml2js": "~0.4.10"
     }
 }
