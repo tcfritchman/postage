@@ -1,0 +1,22 @@
+<table class="table">
+  <% if (USPSResults.length) { %>
+    <tr>
+      <td>Carrier</td>
+      <td>Service</td>
+      <td>Rate</td>
+      <td>Online Rate</td>
+      <td>Expected Delivery Date</td>
+    </tr>
+    <% for (var i = 0; i < USPSResults.length; i++) { %>
+      <tr>
+        <td>USPS</td>
+        <td><%= USPSResults[i].serviceName %></td>
+        <td><%= USPSResults[i].regularRate %></td>
+        <td><%= USPSResults[i].onlineRate %></td>
+        <td><%= USPSResults[i].deliveryDate %></td>
+      </tr>
+    <% } %>
+  <% } else { %>
+    <p>No services available for your request.</p>
+  <% } %>
+</table>
