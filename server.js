@@ -15,7 +15,7 @@ app.set('views', __dirname + '/views');
 /* Routes */
 
 app.get('/', function (req, res) {
-    res.render('index');
+    res.render('pages/index');
 });
 
 app.get('/rates', function(req, res, next) {
