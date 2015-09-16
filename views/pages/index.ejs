@@ -47,18 +47,18 @@
 
 
 		<div class="container">
-			<form>
+			<form action="/rates" method="GET" id="shipment">
 				<div class="form-group">
-					<label for="srcZip">Source Zip Code</label>
-					<input type="text" class="form-control" id="srcZip" placeholder="Source Zip Code">
+					<label for="orig">Source Zip Code</label>
+					<input type="text" class="form-control" id="orig" placeholder="Source Zip Code">
 				</div>
 				<div class="form-group">
-					<label for="destZip">Destination Zip Code</label>
-					<input type="text" class="form-control" id="destZip" placeholder="Destination Zip Code">
+					<label for="dest">Destination Zip Code</label>
+					<input type="text" class="form-control" id="dest" placeholder="Destination Zip Code">
 				</div>
 				<div class="form-group">
-					<label for="itemType">Item Type</label>
-					<select class="form-control">
+					<label for="type">Item Type</label>
+					<select class="form-control" id="type">
 						<option>Postcard</option>
 						<option>Envelope</option>
 						<option>Package</option>
@@ -72,42 +72,51 @@
 						</div>
 						<div class="col-xs-2">
 							<input type="text" class="form-control" id="width" placeholder="W">
-						</div>					
+						</div>
 						<div class="col-xs-2">
 							<input type="text" class="form-control" id="height" placeholder="H">
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="weight">Weight</label>
-					<input type="text" class="form-control" id="weight" placeholder="Weight">
+					<label for="pounds">Pounds</label>
+					<input type="text" class="form-control" id="pounds" placeholder="Pounds">
 				</div>
-				<button class="btn btn-default" type="button" data-toggle="collapse" 
+				<div class="form-group">
+					<label for="ounces">Ounces</label>
+					<input type="text" class="form-control" id="ounces" placeholder="Ounces">
+				</div>
+				<button class="btn btn-default" type="button" data-toggle="collapse"
 				data-target="#moreOptions" aria-expanded="false" aria-controls="moreOptions">
 					Show more options
 				</button>
-				
+
 				<div class="form-group">
 					<div class="collapse" id="moreOptions">
-					
+
 						<div class="form-group">
-							<label for="date">Shipment date</label>
-							<input type="date" class="form-control" id="date">
+							<label for="shipDate">Shipment date</label>
+							<input type="date" class="form-control" id="shipDate">
 						</div>
-						
+
 						<div class="form-group">
 							<label for="value">Value of item(s)</label>
 							<input type="text" class="form-control" id="value" placeholder="Value">
 						</div>
-						
+
 						<div class="form-group">
 							<label>Other options</label>
 							<div class="checkbox">
 								<label>
-									<input type="checkbox"> Contains hazardous material
+									<input type="checkbox" id="hazardous"> Contains hazardous material</input>
 								</label>
 							</div>
 							<div class="checkbox">
+								<label>
+									<input type="checkbox" id="nonrectangular"> Nonrectangular Box </input>
+								</label>
+							</div>
+							<div class="checkbox" id="fragile">
 								<label>
 									<input type="checkbox"> Fragile
 								</label>
@@ -115,7 +124,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<label>Carrier</label><br>
 					<label class="checkbox-inline">
@@ -128,11 +137,15 @@
 						<input type="checkbox" checked> UPS
 					</label>
 				</div>
-			
+
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary">Calculate!</button>
+					<button type="submit" id="submitBtn"class="btn btn-primary">
+                        Calculate!
+                    </button>
 				</div>
 			</form>
+
+            <div id="results"></div>
 
       <footer class="footer">
         <p>&copy; Company 2014</p>
@@ -146,5 +159,30 @@
     <script src="dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Logic for 'submit' button -->
+    <!--
+    <script>
+        $('#submitBtn').on('click', function () {
+            var $btn = $(this).button('loading');
+            var resultsDisplay = document.getElementById('results');
+            var formObj = document.getElementById('shipment');
+            var formValues;
+            for (var i = 0; i < formObj.length; i++) {
+                formValue['']
+            }
+            console.log(document.getElementById('shipment').elements)
+            $.get(
+                '/rates',
+                document.forms['shipment'],
+                function(data) {
+                    console.log('test');
+                    resultsDisplay.innerHTML = data;
+                    $btn.button('reset');
+                }
+            );
+        })
+    </script>
+-->
+
   </body>
 </html>

@@ -1,5 +1,5 @@
 <table class="table">
-  <% if (USPSResults.length) { %>
+  <% if (results.length) { %>
     <tr>
       <td>Carrier</td>
       <td>Service</td>
@@ -7,13 +7,13 @@
       <td>Online Rate</td>
       <td>Expected Delivery Date</td>
     </tr>
-    <% for (var i = 0; i < USPSResults.length; i++) { %>
+    <% for (var i = 0; i < results.length; i++) { %>
       <tr>
-        <td>USPS</td>
-        <td><%= USPSResults[i].serviceName %></td>
-        <td><%= USPSResults[i].regularRate %></td>
-        <td><%= USPSResults[i].onlineRate %></td>
-        <td><%= USPSResults[i].deliveryDate %></td>
+        <td><%= results[i].carrier %></td>
+        <td><%= results[i].serviceName %></td>
+        <td><%= results[i].regularRate %></td>
+        <td><%= results[i].onlineRate %></td>
+        <td><%= results[i].deliveryDate %></td>
       </tr>
     <% } %>
   <% } else { %>

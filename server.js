@@ -11,6 +11,7 @@ var app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
+app.use(express.static(__dirname + '/public'))
 
 /* Routes */
 
@@ -19,7 +20,37 @@ app.get('/', function (req, res) {
 });
 
 app.get('/rates', function(req, res, next) {
-    var shipment = {
+    var shipment = createShipment(req);
+    verifyShipment(shipment);
+
+    usps.queryUSPS(shipment, function(err, USPSResults) {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        // Test
+        console.log(JSON.stringify(USPSResults));
+        res.render('partials/rateResults', {results: USPSResults});
+    });
+});
+
+app.get('/rates-api', function(req, res, next) {
+    var shipment = createShipment(req);
+    verifyShipment(shipment);
+
+    usps.queryUSPS(shipment, function(err, USPSResults) {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.json(USPSResults);
+    });
+});
+
+/* Helpers */
+
+function createShipment(req) {
+    var s = {
         orig:req.query.orig,
         dest:req.query.dest,
         type:req.query.type,
@@ -33,17 +64,8 @@ app.get('/rates', function(req, res, next) {
         value:req.query.value,
         shipDate:req.query.shipDate
     }
-
-    verifyShipment(shipment);
-
-    usps.queryUSPS(shipment, function(err, USPSResults) {
-        if (err) {
-            console.log(err);
-            return next(err);
-        }
-        res.json(USPSResults);
-    });
-});
+    return s;
+}
 
 /* Listen */
 
