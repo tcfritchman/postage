@@ -20,6 +20,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/rates', function(req, res, next) {
+    //console.log(req);
     var shipment = createShipment(req);
     verifyShipment(shipment);
 

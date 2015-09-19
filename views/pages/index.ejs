@@ -47,18 +47,18 @@
 
 
 		<div class="container">
-			<form action="/rates" method="GET" id="shipment">
+			<form action="/rates/" method="GET" id="shipment">
 				<div class="form-group">
 					<label for="orig">Source Zip Code</label>
-					<input type="text" class="form-control" id="orig" placeholder="Source Zip Code">
+					<input type="text" class="form-control" name="orig" placeholder="Source Zip Code">
 				</div>
 				<div class="form-group">
 					<label for="dest">Destination Zip Code</label>
-					<input type="text" class="form-control" id="dest" placeholder="Destination Zip Code">
+					<input type="text" class="form-control" name="dest" placeholder="Destination Zip Code">
 				</div>
 				<div class="form-group">
 					<label for="type">Item Type</label>
-					<select class="form-control" id="type">
+					<select class="form-control" name="type">
 						<option>Postcard</option>
 						<option>Envelope</option>
 						<option>Package</option>
@@ -68,23 +68,23 @@
 					<label for="length">Dimensions</label>
 					<div class="row">
 						<div class="col-xs-2">
-							<input type="text" class="form-control" id="length" placeholder="L">
+							<input type="text" class="form-control" name="length" placeholder="L">
 						</div>
 						<div class="col-xs-2">
-							<input type="text" class="form-control" id="width" placeholder="W">
+							<input type="text" class="form-control" name="width" placeholder="W">
 						</div>
 						<div class="col-xs-2">
-							<input type="text" class="form-control" id="height" placeholder="H">
+							<input type="text" class="form-control" name="height" placeholder="H">
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="pounds">Pounds</label>
-					<input type="text" class="form-control" id="pounds" placeholder="Pounds">
+					<input type="text" class="form-control" name="pounds" placeholder="Pounds">
 				</div>
 				<div class="form-group">
 					<label for="ounces">Ounces</label>
-					<input type="text" class="form-control" id="ounces" placeholder="Ounces">
+					<input type="text" class="form-control" name="ounces" placeholder="Ounces">
 				</div>
 				<button class="btn btn-default" type="button" data-toggle="collapse"
 				data-target="#moreOptions" aria-expanded="false" aria-controls="moreOptions">
@@ -96,27 +96,27 @@
 
 						<div class="form-group">
 							<label for="shipDate">Shipment date</label>
-							<input type="date" class="form-control" id="shipDate">
+							<input type="text" class="form-control" name="shipDate">
 						</div>
 
 						<div class="form-group">
 							<label for="value">Value of item(s)</label>
-							<input type="text" class="form-control" id="value" placeholder="Value">
+							<input type="text" class="form-control" name="value" placeholder="Value">
 						</div>
 
 						<div class="form-group">
 							<label>Other options</label>
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" id="hazardous"> Contains hazardous material</input>
+									<input type="checkbox" name="hazardous"> Contains hazardous material</input>
 								</label>
 							</div>
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" id="nonrectangular"> Nonrectangular Box </input>
+									<input type="checkbox" name="nonrectangular"> Nonrectangular Box </input>
 								</label>
 							</div>
-							<div class="checkbox" id="fragile">
+							<div class="checkbox" name="fragile">
 								<label>
 									<input type="checkbox"> Fragile
 								</label>
