@@ -45,46 +45,45 @@
       </div>
 -->
 
-
 		<div class="container">
 			<form action="/rates/" method="GET" id="shipment">
 				<div class="form-group">
 					<label for="orig">Source Zip Code</label>
-					<input type="text" class="form-control" name="orig" placeholder="Source Zip Code">
+					<input type="text" value="98144" class="form-control" name="orig" placeholder="Source Zip Code">
 				</div>
 				<div class="form-group">
 					<label for="dest">Destination Zip Code</label>
-					<input type="text" class="form-control" name="dest" placeholder="Destination Zip Code">
+					<input type="text" value="98225" class="form-control" name="dest" placeholder="Destination Zip Code">
 				</div>
 				<div class="form-group">
 					<label for="type">Item Type</label>
 					<select class="form-control" name="type">
+						<option>Package</option>
 						<option>Postcard</option>
 						<option>Envelope</option>
-						<option>Package</option>
 					</select>
 				</div>
 				<div class="form-group">
 					<label for="length">Dimensions</label>
 					<div class="row">
 						<div class="col-xs-2">
-							<input type="text" class="form-control" name="length" placeholder="L">
+							<input type="text" value="12" class="form-control" name="length" placeholder="L">
 						</div>
 						<div class="col-xs-2">
-							<input type="text" class="form-control" name="width" placeholder="W">
+							<input type="text" value="12" class="form-control" name="width" placeholder="W">
 						</div>
 						<div class="col-xs-2">
-							<input type="text" class="form-control" name="height" placeholder="H">
+							<input type="text" value="12" class="form-control" name="height" placeholder="H">
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="pounds">Pounds</label>
-					<input type="text" class="form-control" name="pounds" placeholder="Pounds">
+					<input type="text"  value="12" class="form-control" name="pounds" placeholder="Pounds">
 				</div>
 				<div class="form-group">
 					<label for="ounces">Ounces</label>
-					<input type="text" class="form-control" name="ounces" placeholder="Ounces">
+					<input type="text" value="12" class="form-control" name="ounces" placeholder="Ounces">
 				</div>
 				<button class="btn btn-default" type="button" data-toggle="collapse"
 				data-target="#moreOptions" aria-expanded="false" aria-controls="moreOptions">
@@ -96,7 +95,7 @@
 
 						<div class="form-group">
 							<label for="shipDate">Shipment date</label>
-							<input type="text" class="form-control" name="shipDate">
+							<input type="text" value="2015-09-21" class="form-control" name="shipDate">
 						</div>
 
 						<div class="form-group">
@@ -142,6 +141,11 @@
 					<button type="submit" id="submitBtn"class="btn btn-primary">
                         Calculate!
                     </button>
+                <!-- Button style button
+					<button type="button" id="submitBtn" class="btn btn-primary">
+                        Calculate!
+                    </button>
+                -->
 				</div>
 			</form>
 
@@ -157,32 +161,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
-    <!-- Logic for 'submit' button -->
-    <!--
+    Logic for 'submit' button -->
     <script>
-        $('#submitBtn').on('click', function () {
-            var $btn = $(this).button('loading');
-            var resultsDisplay = document.getElementById('results');
-            var formObj = document.getElementById('shipment');
-            var formValues;
-            for (var i = 0; i < formObj.length; i++) {
-                formValue['']
-            }
-            console.log(document.getElementById('shipment').elements)
+        $('#shipment').submit(function (e) {
+            e.preventDefault();
+            var resultsDisplay = $('#results');
+            var formData = $('#shipment').serializeArray().reduce(function (obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
             $.get(
                 '/rates',
-                document.forms['shipment'],
+                formData,
                 function(data) {
-                    console.log('test');
-                    resultsDisplay.innerHTML = data;
-                    $btn.button('reset');
+                    $(resultsDisplay).html(data);
                 }
             );
         })
     </script>
--->
-
   </body>
 </html>
