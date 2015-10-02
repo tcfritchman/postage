@@ -1,0 +1,18 @@
+<table class="table">
+  <tr>
+      <td>Carrier</td>
+      <td>Service</td>
+      <td>Rate</td>
+      <td>Online Rate</td>
+      <td>Expected Delivery Date</td>
+  </tr>
+  {{#results}}
+  <tr>
+    <td>{{carrier}}</td>
+    <td>{{serviceName}}</td>
+    <td>{{regularRate}}</td>
+    <td>{{onlineRate}}</td>
+    <td>{{deliveryDate}}</td>
+  </tr>
+  {{/results}}
+</table>

@@ -39,12 +39,14 @@ app.get('/rates-api', function(req, res, next) {
     var shipment = createShipment(req);
     verifyShipment(shipment);
 
+    var responseData = { results:[] };
     usps.queryUSPS(shipment, function(err, USPSResults) {
         if (err) {
             console.log(err);
             return next(err);
         }
-        res.json(USPSResults);
+        responseData.results = USPSResults;
+        res.json(responseData);
     });
 });
 
