@@ -42,10 +42,20 @@ app.get('/rates-api', function(req, res, next) {
     var responseData = { results:[] };
     usps.queryUSPS(shipment, function(err, USPSResults) {
         if (err) {
-            console.log(err);
+            //console.log(err);
+            responseData.error = {
+                severity: "warning",
+                title: "Warning:",
+                message: err.message
+            }
             return next(err);
+            //return next(err);
         }
-        responseData.results = USPSResults;
+
+        if (USPSResults) {
+            responseData.results = USPSResults;
+        }
+
         res.json(responseData);
     });
 });

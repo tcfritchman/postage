@@ -3,7 +3,7 @@ var displayNewResults = function(displayElement, errElement, data) {
     // if (!data.results) ...
 
     if (data.results.length < 1) {
-        $(resultsDisplay).html('<p>No results found.</p>');
+        $(displayElement).html('<p>No results found.</p>');
     } else {
         $.get('templates/results.stache', function(template) {
             var rendered = Mustache.render(template, data);
@@ -12,6 +12,9 @@ var displayNewResults = function(displayElement, errElement, data) {
     }
 
     if (data.error) {
-        
+        $.get('templates/errorAlert.stache', function(template) {
+            var rendered = Mustache.render(template, data);
+            errElement.html(rendered);
+        });
     }
 }
