@@ -40,7 +40,7 @@ app.get('/rates-api', function(req, res, next) {
                 }
             );
             */
-            //return next(err); // ?
+            return next(err);
         }
         parseString(apiQueryResults, function(err, convertedResponse) {
             var responseData = { results:[], errors:[] };
