@@ -1,5 +1,7 @@
+{{#errors}}
 <div class="alert alert-warning alert-dismissible fade in" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">_</button>
   <strong>{{title}}</strong>
   {{{message}}}
 </div>
+{{/errors}}

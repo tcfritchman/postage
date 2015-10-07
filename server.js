@@ -1,8 +1,10 @@
 var express = require('express'),
+    parseString = require('xml2js').parseString,
     usps = require('./lib/usps'),
     verifyShipment = require('./lib/shipment').verify,
-    createShipment = require('./lib/shipment').createShipmentFromReq;
-    config = require('./config')
+    createShipment = require('./lib/shipment').createShipmentFromReq,
+    config = require('./config'),
+    util = require('util');
 
 /* Create App */
 
@@ -20,43 +22,36 @@ app.get('/', function (req, res) {
     res.render('pages/index');
 });
 
-app.get('/rates', function(req, res, next) {
-    //console.log(req);
-    var shipment = createShipment(req);
-    verifyShipment(shipment);
-
-    usps.queryUSPS(shipment, function(err, USPSResults) {
-        if (err) {
-            console.log(err);
-            return next(err);
-        }
-        //console.log(JSON.stringify(USPSResults));
-        res.render('partials/rateResults', {results: USPSResults});
-    });
-});
-
 app.get('/rates-api', function(req, res, next) {
     var shipment = createShipment(req);
+
+    //TODO: Attach and test this verify code!
     verifyShipment(shipment);
 
-    var responseData = { results:[] };
-    usps.queryUSPS(shipment, function(err, USPSResults) {
+    usps.queryUSPS(shipment, function(err, apiQueryResults) {
+        console.log("RESPONSE\n" + apiQueryResults);
         if (err) {
-            console.log(err);
-            responseData.error = {
-                severity: "warning",
-                title: "Warning:",
-                message: err.message
+            /* THIS DOESN'T WORK RIGHT NOW
+            responseData.errors.push(
+                {
+                    severity: "warning",
+                    title: "Error:",
+                    message: err.message
+                }
+            );
+            */
+            //return next(err); // ?
+        }
+        parseString(apiQueryResults, function(err, convertedResponse) {
+            var responseData = { results:[], errors:[] };
+            var USPSResults = usps.parseResponse(convertedResponse);
+            responseData = {
+                results: responseData.results.concat(USPSResults.results),
+                errors: responseData.errors.concat(USPSResults.errors)
             }
-            return next(err);
-            //return next(err);
-        }
-
-        if (USPSResults) {
-            responseData.results = USPSResults;
-        }
-
-        res.json(responseData);
+            console.log(util.inspect(responseData,false,null));
+            res.json(responseData);
+        });
     });
 });
 

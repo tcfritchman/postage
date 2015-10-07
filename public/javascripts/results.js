@@ -1,7 +1,4 @@
-
 var displayNewResults = function(displayElement, errElement, data) {
-    // if (!data.results) ...
-
     if (data.results.length < 1) {
         $(displayElement).html('<p>No results found.</p>');
     } else {
@@ -11,10 +8,12 @@ var displayNewResults = function(displayElement, errElement, data) {
         });
     }
 
-    if (data.error) {
+    if (data.errors.length) {
         $.get('templates/errorAlert.stache', function(template) {
             var rendered = Mustache.render(template, data);
             errElement.html(rendered);
         });
+    } else {
+        $(displayElement).empty();
     }
 }
