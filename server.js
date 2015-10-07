@@ -26,12 +26,12 @@ app.get('/rates-api', function(req, res, next) {
     var shipment = createShipment(req);
 
     //TODO: Attach and test this verify code!
-    verifyShipment(shipment);
+    //verifyShipment(shipment);
 
     usps.queryUSPS(shipment, function(err, apiQueryResults) {
         console.log("RESPONSE\n" + apiQueryResults);
+        var responseData = { results:[], errors:[] };
         if (err) {
-            /* THIS DOESN'T WORK RIGHT NOW
             responseData.errors.push(
                 {
                     severity: "warning",
@@ -39,19 +39,18 @@ app.get('/rates-api', function(req, res, next) {
                     message: err.message
                 }
             );
-            */
-            return next(err);
+            //return next(err);
+        } else {
+            parseString(apiQueryResults, function(err, convertedResponse) {
+                var USPSResults = usps.parseResponse(convertedResponse);
+                responseData = {
+                    results: responseData.results.concat(USPSResults.results),
+                    errors: responseData.errors.concat(USPSResults.errors)
+                }
+                console.log(util.inspect(responseData,false,null));
+            });
         }
-        parseString(apiQueryResults, function(err, convertedResponse) {
-            var responseData = { results:[], errors:[] };
-            var USPSResults = usps.parseResponse(convertedResponse);
-            responseData = {
-                results: responseData.results.concat(USPSResults.results),
-                errors: responseData.errors.concat(USPSResults.errors)
-            }
-            console.log(util.inspect(responseData,false,null));
-            res.json(responseData);
-        });
+        res.json(responseData);
     });
 });
 
